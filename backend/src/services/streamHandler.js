@@ -6,7 +6,8 @@
 
 import { classify } from './classifier.js';
 import { buildPrompt } from './promptEngine.js';
-import { streamCompletion, getModelName } from './openRouterClient.js';
+import * as openRouterClient from './openRouterClient.js';
+import * as groqClient from './groqClient.js';
 import { logInteraction } from '../db/supabase.js';
 import { logger } from '../utils/logger.js';
 
@@ -37,13 +38,17 @@ export async function handleStreamRequest(data, ws) {
   // Classify
   const caseType = classify(cleanSelected);
   logger.info(`[WS] Case ${caseType} | app: ${cleanAppType}`);
+  logger.info(`[WS] Payload Received -> Highlighted: ${cleanSelected.length} chars | Full Background Context: ${cleanContext.length} chars`);
 
   // Build prompt
   const { systemPrompt, userPrompt } = buildPrompt(caseType, cleanSelected, cleanContext, cleanAppType);
 
-  // Stream from OpenRouter
+  // Decide Provider
+  const provider = process.env.AI_PROVIDER === 'groq' ? groqClient : openRouterClient;
+
+  // Stream from chosen Provider
   try {
-    for await (const token of streamCompletion(systemPrompt, userPrompt)) {
+    for await (const token of provider.streamCompletion(systemPrompt, userPrompt)) {
       ws.send(token);
     }
   } catch (err) {
@@ -60,7 +65,7 @@ export async function handleStreamRequest(data, ws) {
     caseType,
     appType: cleanAppType,
     responseTimeMs,
-    modelUsed: getModelName(),
+    modelUsed: provider.getModelName(),
     fallbackUsed: false
   }).catch(err => logger.error(`Logging failed: ${err.message}`));
 

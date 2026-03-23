@@ -40,7 +40,13 @@ namespace CodeExplainer
                     // First, try to get selected text via Ctrl+C (or Enter for terminal)
                     if (isTerminal)
                     {
-                        // Terminals: Enter copies selected text (Ctrl+C would send SIGINT)
+                        // Terminals: Ctrl+Insert and Ctrl+Shift+C safely copy without sending SIGINT
+                        sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_INSERT);
+                        await Task.Delay(50);
+                        sim.Keyboard.ModifiedKeyStroke(
+                            new[] { VirtualKeyCode.CONTROL, VirtualKeyCode.SHIFT },
+                            new[] { VirtualKeyCode.VK_C });
+                        await Task.Delay(50);
                         sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
                     }
                     else
@@ -62,12 +68,9 @@ namespace CodeExplainer
 
                     if (isTerminal)
                     {
-                        // Terminal: Ctrl+A selects all, then Enter copies
-                        sim.Keyboard.ModifiedKeyStroke(
-                            VirtualKeyCode.CONTROL,
-                            VirtualKeyCode.VK_A);
-                        await Task.Delay(150);
-                        sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+                        // Terminal: Grabbing full context natively is dangerous (Ctrl+A + Enter might execute commands)
+                        // Skip full context for terminals.
+                        fullContext = null;
                     }
                     else
                     {
