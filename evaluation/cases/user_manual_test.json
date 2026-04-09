@@ -1,0 +1,15 @@
+[
+  {
+    "case_id": "manual_capture_hello_world",
+    "category": "html_practice",
+    "environment_type": "ide_editor",
+    "window_title": "css practice11..html - css practice - Visual Studio Code",
+    "process_name": "Code",
+    "selected_method": "uia_textpattern_selection",
+    "background_method": "uia_textpattern_document_range",
+    "selected_text": "<h1>hellow world</h1p>",
+    "background_context": "<div class=\"one\"></div> <div class=\"two\"></div> <h1>hellow world</h1p> <p>bye</p>",
+    "is_partial": false,
+    "is_unsupported": false
+  }
+]

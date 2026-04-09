@@ -66,8 +66,16 @@ RULES:
 export function buildPrompt(caseType, selectedText, backgroundContext, windowTitle, processName, environmentType, ocrUsed = false, ocrConfidence = 0) {
   const systemPrompt = SYSTEM_PROMPTS[caseType] || SYSTEM_PROMPTS[4];
 
+  // Strip object replacement chars (U+FFFC = ￼), other non-printable control chars,
+  // and collapse excessive whitespace. Zero latency impact — pure CPU string op.
+  const cleanedBackground = (backgroundContext || '')
+    .replace(/\uFFFC/g, '')                        // remove ￼ (UIA embedded object placeholders)
+    .replace(/[\x00-\x08\x0B\x0E-\x1F\x7F]/g, '') // remove non-printable control chars
+    .replace(/[ \t]{4,}/g, '   ')                  // collapse excessive spaces/tabs
+    .trim();
+
   let userPrompt = '';
-  const hasBackground = backgroundContext && backgroundContext.trim().length > 0 && backgroundContext !== selectedText;
+  const hasBackground = cleanedBackground.length > 0 && cleanedBackground !== selectedText;
 
   userPrompt += `[System Logging Metadata - DO NOT explain this to the user unless they ask about it]
 - Environment: ${environmentType}
@@ -75,7 +83,7 @@ export function buildPrompt(caseType, selectedText, backgroundContext, windowTit
 - Window Title: ${windowTitle || 'unknown'}\n\n`;
 
   if (hasBackground) {
-    userPrompt += `BACKGROUND CONTEXT (separate pipeline):\n\`\`\`\n${backgroundContext.substring(0, 10000)}\n\`\`\`\n\n`;
+    userPrompt += `BACKGROUND CONTEXT (separate pipeline):\n\`\`\`\n${cleanedBackground.substring(0, 10000)}\n\`\`\`\n\n`;
     userPrompt += "IMPORTANT: Explain the selected text in the context of BACKGROUND CONTEXT above. Use it to disambiguate short snippets.\n\n";
   } else {
     userPrompt += "BACKGROUND CONTEXT: not available. Explain the meaning of the SELECTED TEXT as a standalone concept. DO NOT invent connections between the selected text and the System Logging Metadata.\n\n";
