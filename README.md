@@ -1,8 +1,8 @@
-# Intelligent Context Engine & Code Explainer (Team Onboarding Guide)
+# Intelligent Context Engine & Code Explainer
 
-Welcome to the Prototype 4 repository. This document serves as the absolute master guide for onboarding new engineers to the system. It covers the full architecture, exact technologies utilized, the context-capture flow, evaluation systems, and the future evolution of our OS-level assistant.
+Welcome to the repository. This document serves as the absolute master guide for the system. It covers the full architecture, exact technologies utilized, the context-capture flow, evaluation systems, and the future evolution of our OS-level assistant.
 
-Prototype 4 is an advanced, Windows-first OS-level assistant that explains highlighted code, browser text, and terminal streams instantaneously—without forcing developers to switch windows. 
+This is an advanced, Windows-first OS-level assistant that explains highlighted code, browser text, and terminal streams instantaneously—without forcing developers to switch windows. 
 
 By leveraging native UI scraping APIs, the system understands exactly what you highlight, identifies the application you are in, seamlessly extracts the surrounding background visual context natively, and beams it through WebSockets to a local node routing backend to generate context-aware LLM answers.
 
