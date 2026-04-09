@@ -8889,3 +8889,365 @@
 [09:48:57] INFO  [Backend] req=13 stage=complete
 [09:48:57] INFO  [Backend] req=13 stage=stream_finished token_chunks=275 token_chars=1177 duration_ms=3491
 [09:48:57] INFO  [Flow] req=13 stage=hotkey_finished duration_ms=3828
+[15:51:57] INFO  [App] Startup began.
+[15:51:57] INFO  [App] Log file: D:\PROJECTS\Startup\prototype4 - Copy (2)\runlogs\client_live.log
+[15:51:58] INFO  [App] Hidden message window created.
+[15:52:04] INFO  [App] Tray icon ready.
+[15:52:04] INFO  [Hotkey] Registered Ctrl+Shift+Space.
+[15:52:04] INFO  [Hotkey] Registered Ctrl+Shift+Space.
+[15:52:04] INFO  [App] Overlay window created. App is ready.
+[15:52:15] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[15:52:15] INFO  [Flow] req=1 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[15:52:16] INFO  [Window] req=1 process=msedge title="Google Gemini and 23 more pages - Personal - Microsoft​ Edge" class=Chrome_WidgetWin_1 hwnd=66718
+[15:52:16] INFO  [Window] req=1 classified_environment=browser_chromium
+[15:52:16] INFO  [Capture] req=1 using_strategy=BrowserStrategy
+[15:52:16] INFO  [OCR_DEBUG] Force-running OCR on 'Google Gemini and 23 more pages - Personal - Microsoft​ Edge' (msedge) for debug.
+[15:52:18] INFO  [OcrCapture] OCR: area=FullWindow chars=711 confidence=0.44 title='Google Gemini and 23 more pages - Personal - Microsoft​ Edge'
+[15:52:18] INFO  [OCR_DEBUG] OCR result: confidence=0.44 chars=711 area=FullWindow
+[15:52:18] INFO  [OCR_DEBUG] OCR preview: e Giv, that Got Cor ÉJ https://gemini.google.com/app/b7a260fd416a6e3d Gemini coc Grammarly for Code: A System-Wide Overl
+[15:52:18] INFO  [CaptureSummary] req=1 process=msedge title="Google Gemini and 23 more pages - Personal - Microsoft​ Edge" env=browser_chromium strategy=BrowserStrategy selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=28 background_chars=2997 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container." duration_ms=1942
+[15:52:18] INFO  [Capture] req=1 process=msedge title="Google Gemini and 23 more pages - Personal - Microsoft​ Edge" env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=28 background_chars=2997 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container."
+[15:52:18] INFO  [Capture] req=1 Selected preview: Gemini said It is incredibly
+[15:52:18] INFO  [Capture] req=1 Background preview: ￼ ￼ ￼ Main menu Gemini Grammarly for Code: A System-Wide Overlay Upgrade Share c...
+[15:52:18] INFO  [Backend] req=1 Sending capture payload to backend.
+[15:52:19] INFO  [Backend] req=1 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=28 background_chars=2997 env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container partial=False unsupported=False
+[15:52:19] INFO  [Backend] req=1 stage=connected
+[15:52:19] INFO  [Backend] req=1 stage=payload_sent
+[15:52:19] INFO  [Backend] req=1 stage=meta label="browser_chromium | uia_textpattern_selection + uia_tree_container"
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=2 chunk_chars=9 total_chars=12
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=3 chunk_chars=5 total_chars=17
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=4 chunk_chars=2 total_chars=19
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=5 chunk_chars=2 total_chars=21
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=25 chunk_chars=7 total_chars=118
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=50 chunk_chars=3 total_chars=243
+[15:52:20] INFO  [Backend] req=1 stage=token_chunk chunk=75 chunk_chars=3 total_chars=365
+[15:52:21] INFO  [Backend] req=1 stage=token_chunk chunk=100 chunk_chars=8 total_chars=514
+[15:52:21] INFO  [Backend] req=1 stage=token_chunk chunk=125 chunk_chars=4 total_chars=645
+[15:52:21] INFO  [Backend] req=1 stage=complete
+[15:52:21] INFO  [Backend] req=1 stage=stream_finished token_chunks=143 token_chars=754 duration_ms=2088
+[15:52:21] INFO  [Flow] req=1 stage=hotkey_finished duration_ms=5562
+[15:52:32] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[15:52:32] INFO  [Flow] req=2 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[15:52:32] INFO  [Window] req=2 process=Code title="css practice11..html - css practice - Visual Studio Code" class=Chrome_WidgetWin_1 hwnd=1311310
+[15:52:32] INFO  [Window] req=2 classified_environment=ide_editor
+[15:52:32] INFO  [Capture] req=2 using_strategy=IDEStrategy
+[15:52:32] INFO  [CaptureSummary] req=2 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_editor strategy=IDEStrategy selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=73 background_chars=409 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range." duration_ms=23
+[15:52:32] INFO  [Capture] req=2 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=73 background_chars=409 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range."
+[15:52:32] INFO  [Capture] req=2 Selected preview: h1{ background-color: rgb(183, 198, 17); color: white; display: inline; }
+[15:52:32] INFO  [Capture] req=2 Background preview: <div class="one"></div> <div class="two"></div> <h1>hellow world</h1> <p>bye</p>...
+[15:52:32] INFO  [Backend] req=2 Sending capture payload to backend.
+[15:52:32] INFO  [Backend] req=2 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=73 background_chars=409 env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range partial=False unsupported=False
+[15:52:32] INFO  [Backend] req=2 stage=connected
+[15:52:32] INFO  [Backend] req=2 stage=payload_sent
+[15:52:32] INFO  [Backend] req=2 stage=meta label="ide_editor | uia_textpattern_selection + uia_textpattern_document_range"
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=2 chunk_chars=2 total_chars=5
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=3 chunk_chars=6 total_chars=11
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=4 chunk_chars=5 total_chars=16
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=5 chunk_chars=4 total_chars=20
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=25 chunk_chars=5 total_chars=106
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=50 chunk_chars=1 total_chars=190
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=75 chunk_chars=1 total_chars=272
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=100 chunk_chars=2 total_chars=355
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=125 chunk_chars=7 total_chars=472
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=150 chunk_chars=4 total_chars=544
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=175 chunk_chars=2 total_chars=638
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=200 chunk_chars=5 total_chars=742
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=225 chunk_chars=2 total_chars=852
+[15:52:33] INFO  [Backend] req=2 stage=token_chunk chunk=250 chunk_chars=11 total_chars=958
+[15:52:34] INFO  [Backend] req=2 stage=token_chunk chunk=275 chunk_chars=4 total_chars=1084
+[15:52:34] INFO  [Backend] req=2 stage=token_chunk chunk=300 chunk_chars=8 total_chars=1216
+[15:52:34] INFO  [Backend] req=2 stage=token_chunk chunk=325 chunk_chars=4 total_chars=1349
+[15:52:34] INFO  [Backend] req=2 stage=token_chunk chunk=350 chunk_chars=3 total_chars=1439
+[15:52:34] INFO  [Backend] req=2 stage=complete
+[15:52:34] INFO  [Backend] req=2 stage=stream_finished token_chunks=363 token_chars=1485 duration_ms=1575
+[15:52:34] INFO  [Flow] req=2 stage=hotkey_finished duration_ms=1856
+[15:53:18] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[15:53:18] INFO  [Flow] req=3 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[15:53:18] INFO  [Window] req=3 process=Code title="css practice11..html - css practice - Visual Studio Code" class=Chrome_WidgetWin_1 hwnd=1311310
+[15:53:18] INFO  [Window] req=3 classified_environment=ide_editor
+[15:53:18] INFO  [Capture] req=3 using_strategy=IDEStrategy
+[15:53:18] INFO  [CaptureSummary] req=3 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_editor strategy=IDEStrategy selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=36 background_chars=409 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range." duration_ms=13
+[15:53:18] INFO  [Capture] req=3 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=36 background_chars=409 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range."
+[15:53:18] INFO  [Capture] req=3 Selected preview: background-color: rgb(183, 198, 17);
+[15:53:18] INFO  [Capture] req=3 Background preview: <div class="one"></div> <div class="two"></div> <h1>hellow world</h1> <p>bye</p>...
+[15:53:18] INFO  [Backend] req=3 Sending capture payload to backend.
+[15:53:18] INFO  [Backend] req=3 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=36 background_chars=409 env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range partial=False unsupported=False
+[15:53:18] INFO  [Backend] req=3 stage=connected
+[15:53:18] INFO  [Backend] req=3 stage=payload_sent
+[15:53:18] INFO  [Backend] req=3 stage=meta label="ide_editor | uia_textpattern_selection + uia_textpattern_document_range"
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=2 chunk_chars=2 total_chars=5
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=3 chunk_chars=6 total_chars=11
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=4 chunk_chars=5 total_chars=16
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=5 chunk_chars=4 total_chars=20
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=25 chunk_chars=3 total_chars=102
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=50 chunk_chars=5 total_chars=200
+[15:53:19] INFO  [Backend] req=3 stage=token_chunk chunk=75 chunk_chars=4 total_chars=304
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=100 chunk_chars=1 total_chars=383
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=125 chunk_chars=4 total_chars=491
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=150 chunk_chars=1 total_chars=569
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=175 chunk_chars=4 total_chars=652
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=200 chunk_chars=8 total_chars=786
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=225 chunk_chars=3 total_chars=890
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=250 chunk_chars=5 total_chars=1012
+[15:53:20] INFO  [Backend] req=3 stage=token_chunk chunk=275 chunk_chars=4 total_chars=1128
+[15:53:21] INFO  [Backend] req=3 stage=token_chunk chunk=300 chunk_chars=5 total_chars=1251
+[15:53:21] INFO  [Backend] req=3 stage=token_chunk chunk=325 chunk_chars=6 total_chars=1380
+[15:53:21] INFO  [Backend] req=3 stage=complete
+[15:53:21] INFO  [Backend] req=3 stage=stream_finished token_chunks=337 token_chars=1431 duration_ms=2719
+[15:53:21] INFO  [Flow] req=3 stage=hotkey_finished duration_ms=3221
+[15:53:46] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[15:53:46] INFO  [Flow] req=4 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[15:53:46] INFO  [Window] req=4 process=Code title="css practice11..html - css practice - Visual Studio Code - 5..." class=Chrome_WidgetWin_1 hwnd=1311310
+[15:53:46] INFO  [Window] req=4 classified_environment=ide_editor
+[15:53:46] INFO  [Capture] req=4 using_strategy=IDEStrategy
+[15:53:46] INFO  [CaptureSummary] req=4 process=Code title="css practice11..html - css practice - Visual Studio Code - 5..." env=ide_editor strategy=IDEStrategy selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=77 background_chars=413 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range." duration_ms=13
+[15:53:46] INFO  [Capture] req=4 process=Code title="css practice11..html - css practice - Visual Studio Code - 5..." env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=77 background_chars=413 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range."
+[15:53:46] INFO  [Capture] req=4 Selected preview: h1{fwef background-color: rgb(183, 198, 17); color: white; display: inline; }
+[15:53:46] INFO  [Capture] req=4 Background preview: <div class="one"></div> <div class="two"></div> <h1>hellow world</h1> <p>bye</p>...
+[15:53:46] INFO  [Backend] req=4 Sending capture payload to backend.
+[15:53:46] INFO  [Backend] req=4 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=77 background_chars=413 env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range partial=False unsupported=False
+[15:53:46] INFO  [Backend] req=4 stage=connected
+[15:53:46] INFO  [Backend] req=4 stage=payload_sent
+[15:53:46] INFO  [Backend] req=4 stage=meta label="ide_editor | uia_textpattern_selection + uia_textpattern_document_range"
+[15:53:47] INFO  [Backend] req=4 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[15:53:47] INFO  [Backend] req=4 stage=token_chunk chunk=2 chunk_chars=2 total_chars=5
+[15:53:47] INFO  [Backend] req=4 stage=token_chunk chunk=3 chunk_chars=6 total_chars=11
+[15:53:47] INFO  [Backend] req=4 stage=token_chunk chunk=4 chunk_chars=5 total_chars=16
+[15:53:47] INFO  [Backend] req=4 stage=token_chunk chunk=5 chunk_chars=4 total_chars=20
+[15:53:47] INFO  [Backend] req=4 stage=token_chunk chunk=25 chunk_chars=5 total_chars=106
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=50 chunk_chars=1 total_chars=190
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=75 chunk_chars=1 total_chars=272
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=100 chunk_chars=3 total_chars=367
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=125 chunk_chars=4 total_chars=469
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=150 chunk_chars=2 total_chars=577
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=175 chunk_chars=4 total_chars=662
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=200 chunk_chars=1 total_chars=754
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=225 chunk_chars=6 total_chars=837
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=250 chunk_chars=6 total_chars=928
+[15:53:48] INFO  [Backend] req=4 stage=token_chunk chunk=275 chunk_chars=6 total_chars=1027
+[15:53:49] INFO  [Backend] req=4 stage=token_chunk chunk=300 chunk_chars=2 total_chars=1124
+[15:53:49] INFO  [Backend] req=4 stage=token_chunk chunk=325 chunk_chars=3 total_chars=1248
+[15:53:49] INFO  [Backend] req=4 stage=token_chunk chunk=350 chunk_chars=6 total_chars=1394
+[15:53:49] INFO  [Backend] req=4 stage=token_chunk chunk=375 chunk_chars=5 total_chars=1515
+[15:53:49] INFO  [Backend] req=4 stage=token_chunk chunk=400 chunk_chars=7 total_chars=1600
+[15:53:49] INFO  [Backend] req=4 stage=complete
+[15:53:49] INFO  [Backend] req=4 stage=stream_finished token_chunks=415 token_chars=1680 duration_ms=2885
+[15:53:49] INFO  [Flow] req=4 stage=hotkey_finished duration_ms=3237
+[15:54:07] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[15:54:07] INFO  [Flow] req=5 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[15:54:07] INFO  [Window] req=5 process=Code title="css practice11..html - css practice - Visual Studio Code" class=Chrome_WidgetWin_1 hwnd=1311310
+[15:54:07] INFO  [Window] req=5 classified_environment=ide_editor
+[15:54:07] INFO  [Capture] req=5 using_strategy=IDEStrategy
+[15:54:07] WARN  [IDE] Embedded terminal focus detected. Rerouting to IDE terminal capture path.
+[15:54:07] WARN  [CompatClipboard] Using terminal compatibility mode for Code.
+[15:54:14] WARN  [CompatClipboard] Captured 4 chars via terminal compatibility mode.
+[15:54:14] INFO  [CaptureSummary] req=5 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_embedded_terminal strategy=IDEStrategy selected_method=clipboard_compat_terminal background_method=uia_textpattern_visible_ranges selected_chars=4 background_chars=2079 is_partial=False is_unsupported=False status="Selected terminal text captured via clipboard compatibility mode. Terminal background captured via UIA visible ranges." duration_ms=7288
+[15:54:14] INFO  [Capture] req=5 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_embedded_terminal selected_method=clipboard_compat_terminal background_method=uia_textpattern_visible_ranges selected_chars=4 background_chars=2079 is_partial=False is_unsupported=False status="Selected terminal text captured via clipboard compatibility mode. Terminal background captured via UIA visible ranges."
+[15:54:14] INFO  [Capture] req=5 Selected preview: .git
+[15:54:14] INFO  [Capture] req=5 Background preview: ￼ ￼ ￼ ￼ ￼   css practice11..html - css practice - Visual Studio Code     ￼...
+[15:54:14] INFO  [Backend] req=5 Sending capture payload to backend.
+[15:54:14] INFO  [Backend] req=5 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=4 background_chars=2079 env=ide_embedded_terminal selected_method=clipboard_compat_terminal background_method=uia_textpattern_visible_ranges partial=False unsupported=False
+[15:54:14] INFO  [Backend] req=5 stage=connected
+[15:54:14] INFO  [Backend] req=5 stage=payload_sent
+[15:54:14] INFO  [Backend] req=5 stage=meta label="ide_embedded_terminal | clipboard_compat_terminal + uia_textpattern_visible_ranges"
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=2 chunk_chars=9 total_chars=12
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=3 chunk_chars=5 total_chars=17
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=4 chunk_chars=3 total_chars=20
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=5 chunk_chars=3 total_chars=23
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=25 chunk_chars=6 total_chars=134
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=50 chunk_chars=4 total_chars=247
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=75 chunk_chars=5 total_chars=362
+[15:54:15] INFO  [Backend] req=5 stage=token_chunk chunk=100 chunk_chars=8 total_chars=487
+[15:54:16] INFO  [Backend] req=5 stage=token_chunk chunk=125 chunk_chars=10 total_chars=591
+[15:54:16] INFO  [Backend] req=5 stage=complete
+[15:54:16] INFO  [Backend] req=5 stage=stream_finished token_chunks=126 token_chars=592 duration_ms=1758
+[15:54:16] INFO  [Flow] req=5 stage=hotkey_finished duration_ms=9481
+[15:55:28] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[15:55:28] INFO  [Flow] req=6 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[15:55:29] INFO  [Window] req=6 process=WindowsTerminal title="npm run dev" class=CASCADIA_HOSTING_WINDOW_CLASS hwnd=1574220
+[15:55:29] INFO  [Window] req=6 classified_environment=modern_terminal
+[15:55:29] INFO  [Capture] req=6 using_strategy=ModernTerminalStrategy
+[15:55:29] INFO  [CaptureSummary] req=6 process=WindowsTerminal title="npm run dev" env=modern_terminal strategy=ModernTerminalStrategy selected_method=uia_textpattern_selection background_method=uia_textpattern_visible_ranges selected_chars=18 background_chars=3459 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Terminal background captured via UIA visible ranges." duration_ms=23
+[15:55:29] INFO  [Capture] req=6 process=WindowsTerminal title="npm run dev" env=modern_terminal selected_method=uia_textpattern_selection background_method=uia_textpattern_visible_ranges selected_chars=18 background_chars=3459 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Terminal background captured via UIA visible ranges."
+[15:55:29] INFO  [Capture] req=6 Selected preview: Complete in 2562ms
+[15:55:29] INFO  [Capture] req=6 Background preview: n | background_method: uia_tree_container                                       ...
+[15:55:29] INFO  [Backend] req=6 Sending capture payload to backend.
+[15:55:29] INFO  [Backend] req=6 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=18 background_chars=3459 env=modern_terminal selected_method=uia_textpattern_selection background_method=uia_textpattern_visible_ranges partial=False unsupported=False
+[15:55:29] INFO  [Backend] req=6 stage=connected
+[15:55:29] INFO  [Backend] req=6 stage=payload_sent
+[15:55:29] INFO  [Backend] req=6 stage=meta label="modern_terminal | uia_textpattern_selection + uia_textpattern_visible_ranges"
+[15:55:31] INFO  [Backend] req=6 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[15:55:31] INFO  [Backend] req=6 stage=token_chunk chunk=2 chunk_chars=9 total_chars=12
+[15:55:31] INFO  [Backend] req=6 stage=token_chunk chunk=3 chunk_chars=5 total_chars=17
+[15:55:31] INFO  [Backend] req=6 stage=token_chunk chunk=4 chunk_chars=2 total_chars=19
+[15:55:31] INFO  [Backend] req=6 stage=token_chunk chunk=5 chunk_chars=8 total_chars=27
+[15:55:31] INFO  [Backend] req=6 stage=token_chunk chunk=25 chunk_chars=13 total_chars=117
+[15:55:33] INFO  [Backend] req=6 stage=token_chunk chunk=50 chunk_chars=8 total_chars=238
+[15:55:33] INFO  [Backend] req=6 stage=token_chunk chunk=75 chunk_chars=5 total_chars=342
+[15:55:33] INFO  [Backend] req=6 stage=token_chunk chunk=100 chunk_chars=5 total_chars=476
+[15:55:33] INFO  [Backend] req=6 stage=token_chunk chunk=125 chunk_chars=11 total_chars=612
+[15:55:33] INFO  [Backend] req=6 stage=token_chunk chunk=150 chunk_chars=1 total_chars=745
+[15:55:33] INFO  [Backend] req=6 stage=token_chunk chunk=175 chunk_chars=6 total_chars=880
+[15:55:33] INFO  [Backend] req=6 stage=complete
+[15:55:33] INFO  [Backend] req=6 stage=stream_finished token_chunks=184 token_chars=926 duration_ms=4266
+[15:55:33] INFO  [Flow] req=6 stage=hotkey_finished duration_ms=4593
+[17:10:36] INFO  [App] Startup began.
+[17:10:36] INFO  [App] Log file: D:\PROJECTS\Startup\prototype4 - Copy (2)\runlogs\client_live.log
+[17:10:37] INFO  [App] Hidden message window created.
+[17:10:37] INFO  [App] Tray icon ready.
+[17:10:37] INFO  [Hotkey] Registered Ctrl+Shift+Space.
+[17:10:37] INFO  [Hotkey] Registered Ctrl+Shift+Space.
+[17:10:38] INFO  [App] Overlay window created. App is ready.
+[17:10:45] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[17:10:45] INFO  [Flow] req=1 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[17:10:45] INFO  [Window] req=1 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." class=Chrome_WidgetWin_1 hwnd=66718
+[17:10:45] INFO  [Window] req=1 classified_environment=browser_chromium
+[17:10:45] INFO  [Capture] req=1 using_strategy=BrowserStrategy
+[17:10:45] INFO  [OCR_DEBUG] Force-running OCR on 'AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge' (msedge) for debug.
+[17:10:46] INFO  [OcrCapture] OCR: area=FullWindow chars=691 confidence=0.41 title='AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge'
+[17:10:46] INFO  [OCR_DEBUG] OCR result: confidence=0.41 chars=691 area=FullWindow
+[17:10:46] INFO  [OCR_DEBUG] OCR preview: Giv tha ÉJ https://chatgpt.com/c/69d5e740-6928-8321 ChatGPT MY Crc Ver Ver pos coc SOI AP -b9b7-42c62abc3f73 Real-world 
+[17:10:46] INFO  [CaptureSummary] req=1 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium strategy=BrowserStrategy selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=5 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container." duration_ms=781
+[17:10:46] INFO  [Capture] req=1 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=5 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container."
+[17:10:46] INFO  [Capture] req=1 Selected preview: Linux
+[17:10:46] INFO  [Capture] req=1 Background preview: Good question — this is something almost everyone wonders at the beginning 👍 👉...
+[17:10:46] INFO  [Backend] req=1 Sending capture payload to backend.
+[17:10:46] INFO  [Backend] req=1 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=5 background_chars=815 env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container partial=False unsupported=False
+[17:10:46] INFO  [Backend] req=1 stage=connected
+[17:10:46] INFO  [Backend] req=1 stage=payload_sent
+[17:10:46] INFO  [Backend] req=1 stage=meta label="browser_chromium | uia_textpattern_selection + uia_tree_container"
+[17:10:47] INFO  [Backend] req=1 stage=token_chunk chunk=1 chunk_chars=5 total_chars=5
+[17:10:47] INFO  [Backend] req=1 stage=token_chunk chunk=2 chunk_chars=3 total_chars=8
+[17:10:47] INFO  [Backend] req=1 stage=token_chunk chunk=3 chunk_chars=3 total_chars=11
+[17:10:47] INFO  [Backend] req=1 stage=token_chunk chunk=4 chunk_chars=10 total_chars=21
+[17:10:47] INFO  [Backend] req=1 stage=token_chunk chunk=5 chunk_chars=7 total_chars=28
+[17:10:47] INFO  [Backend] req=1 stage=token_chunk chunk=25 chunk_chars=5 total_chars=127
+[17:10:47] INFO  [Backend] req=1 stage=complete
+[17:10:47] INFO  [Backend] req=1 stage=stream_finished token_chunks=31 token_chars=153 duration_ms=1244
+[17:10:47] INFO  [Flow] req=1 stage=hotkey_finished duration_ms=2584
+[17:12:30] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[17:12:30] INFO  [Flow] req=2 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[17:12:30] INFO  [Window] req=2 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." class=Chrome_WidgetWin_1 hwnd=66718
+[17:12:30] INFO  [Window] req=2 classified_environment=browser_chromium
+[17:12:30] INFO  [Capture] req=2 using_strategy=BrowserStrategy
+[17:12:30] INFO  [OCR_DEBUG] Force-running OCR on 'AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge' (msedge) for debug.
+[17:12:31] INFO  [OcrCapture] OCR: area=FullWindow chars=797 confidence=0.47 title='AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge'
+[17:12:31] INFO  [OCR_DEBUG] OCR result: confidence=0.47 chars=797 area=FullWindow
+[17:12:31] INFO  [OCR_DEBUG] OCR preview: Giv tha ÉJ https://chatgpt.com/c/69d5e740-6928-8321 ChatGPT MY Crc Ver Ver pos coc -b9b7-42c62abc3f73 Real-world example
+[17:12:31] INFO  [CaptureSummary] req=2 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium strategy=BrowserStrategy selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=14 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container." duration_ms=222
+[17:12:31] INFO  [Capture] req=2 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=14 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container."
+[17:12:31] INFO  [Capture] req=2 Selected preview: Final takeaway
+[17:12:31] INFO  [Capture] req=2 Background preview: Good question — this is something almost everyone wonders at the beginning 👍 👉...
+[17:12:31] INFO  [Backend] req=2 Sending capture payload to backend.
+[17:12:31] INFO  [Backend] req=2 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=14 background_chars=815 env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container partial=False unsupported=False
+[17:12:31] INFO  [Backend] req=2 stage=connected
+[17:12:31] INFO  [Backend] req=2 stage=payload_sent
+[17:12:31] INFO  [Backend] req=2 stage=meta label="browser_chromium | uia_textpattern_selection + uia_tree_container"
+[17:12:31] INFO  [Backend] req=2 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[17:12:31] INFO  [Backend] req=2 stage=token_chunk chunk=2 chunk_chars=7 total_chars=10
+[17:12:31] INFO  [Backend] req=2 stage=token_chunk chunk=3 chunk_chars=2 total_chars=12
+[17:12:31] INFO  [Backend] req=2 stage=token_chunk chunk=4 chunk_chars=5 total_chars=17
+[17:12:31] INFO  [Backend] req=2 stage=token_chunk chunk=5 chunk_chars=9 total_chars=26
+[17:12:31] INFO  [Backend] req=2 stage=token_chunk chunk=25 chunk_chars=5 total_chars=135
+[17:12:32] INFO  [Backend] req=2 stage=token_chunk chunk=50 chunk_chars=1 total_chars=256
+[17:12:32] INFO  [Backend] req=2 stage=complete
+[17:12:32] INFO  [Backend] req=2 stage=stream_finished token_chunks=50 token_chars=256 duration_ms=914
+[17:12:32] INFO  [Flow] req=2 stage=hotkey_finished duration_ms=1413
+[17:12:45] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[17:12:45] INFO  [Flow] req=3 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[17:12:45] INFO  [Window] req=3 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." class=Chrome_WidgetWin_1 hwnd=66718
+[17:12:45] INFO  [Window] req=3 classified_environment=browser_chromium
+[17:12:45] INFO  [Capture] req=3 using_strategy=BrowserStrategy
+[17:12:45] INFO  [OCR_DEBUG] Force-running OCR on 'AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge' (msedge) for debug.
+[17:12:46] INFO  [OcrCapture] OCR: area=FullWindow chars=797 confidence=0.47 title='AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge'
+[17:12:46] INFO  [OCR_DEBUG] OCR result: confidence=0.47 chars=797 area=FullWindow
+[17:12:46] INFO  [OCR_DEBUG] OCR preview: Giv tha ÉJ https://chatgpt.com/c/69d5e740-6928-8321 ChatGPT MY Crc Ver Ver pos coc -b9b7-42c62abc3f73 Real-world example
+[17:12:46] INFO  [CaptureSummary] req=3 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium strategy=BrowserStrategy selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=14 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container." duration_ms=213
+[17:12:46] INFO  [Capture] req=3 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=14 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container."
+[17:12:46] INFO  [Capture] req=3 Selected preview: Final takeaway
+[17:12:46] INFO  [Capture] req=3 Background preview: Good question — this is something almost everyone wonders at the beginning 👍 👉...
+[17:12:46] INFO  [Backend] req=3 Sending capture payload to backend.
+[17:12:46] INFO  [Backend] req=3 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=14 background_chars=815 env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container partial=False unsupported=False
+[17:12:46] INFO  [Backend] req=3 stage=connected
+[17:12:46] INFO  [Backend] req=3 stage=payload_sent
+[17:12:46] INFO  [Backend] req=3 stage=meta label="browser_chromium | uia_textpattern_selection + uia_tree_container"
+[17:12:46] INFO  [Backend] req=3 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[17:12:46] INFO  [Backend] req=3 stage=token_chunk chunk=2 chunk_chars=7 total_chars=10
+[17:12:46] INFO  [Backend] req=3 stage=token_chunk chunk=3 chunk_chars=2 total_chars=12
+[17:12:46] INFO  [Backend] req=3 stage=token_chunk chunk=4 chunk_chars=5 total_chars=17
+[17:12:46] INFO  [Backend] req=3 stage=token_chunk chunk=5 chunk_chars=9 total_chars=26
+[17:12:46] INFO  [Backend] req=3 stage=token_chunk chunk=25 chunk_chars=5 total_chars=135
+[17:12:46] INFO  [Backend] req=3 stage=token_chunk chunk=50 chunk_chars=1 total_chars=256
+[17:12:47] INFO  [Backend] req=3 stage=complete
+[17:12:47] INFO  [Backend] req=3 stage=stream_finished token_chunks=50 token_chars=256 duration_ms=909
+[17:12:47] INFO  [Flow] req=3 stage=hotkey_finished duration_ms=1343
+[17:14:30] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[17:14:30] INFO  [Flow] req=4 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[17:14:30] INFO  [Window] req=4 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." class=Chrome_WidgetWin_1 hwnd=66718
+[17:14:30] INFO  [Window] req=4 classified_environment=browser_chromium
+[17:14:30] INFO  [Capture] req=4 using_strategy=BrowserStrategy
+[17:14:30] INFO  [OCR_DEBUG] Force-running OCR on 'AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge' (msedge) for debug.
+[17:14:31] INFO  [OcrCapture] OCR: area=FullWindow chars=791 confidence=0.45 title='AWS EC2 Overview and 24 more pages - Personal - Microsoft​ Edge'
+[17:14:31] INFO  [OCR_DEBUG] OCR result: confidence=0.45 chars=791 area=FullWindow
+[17:14:31] INFO  [OCR_DEBUG] OCR preview: Giv tha ÉJ https://chatgpt.com/c/69d5e740-6928-8321 ChatGPT MY Crc Ver Ver pos -b9b7-42c62abc3f73 Real-world example Hos
+[17:14:31] INFO  [CaptureSummary] req=4 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium strategy=BrowserStrategy selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=14 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container." duration_ms=329
+[17:14:31] INFO  [Capture] req=4 process=msedge title="AWS EC2 Overview and 24 more pages - Personal - Microsoft​ E..." env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container selected_chars=14 background_chars=815 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Browser background captured from nearest UIA container."
+[17:14:31] INFO  [Capture] req=4 Selected preview: Final takeaway
+[17:14:31] INFO  [Capture] req=4 Background preview: Good question — this is something almost everyone wonders at the beginning 👍 👉...
+[17:14:31] INFO  [Backend] req=4 Sending capture payload to backend.
+[17:14:31] INFO  [Backend] req=4 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=14 background_chars=815 env=browser_chromium selected_method=uia_textpattern_selection background_method=uia_tree_container partial=False unsupported=False
+[17:14:31] INFO  [Backend] req=4 stage=connected
+[17:14:31] INFO  [Backend] req=4 stage=payload_sent
+[17:14:31] INFO  [Backend] req=4 stage=meta label="browser_chromium | uia_textpattern_selection + uia_tree_container"
+[17:14:31] INFO  [Backend] req=4 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[17:14:31] INFO  [Backend] req=4 stage=token_chunk chunk=2 chunk_chars=7 total_chars=10
+[17:14:31] INFO  [Backend] req=4 stage=token_chunk chunk=3 chunk_chars=2 total_chars=12
+[17:14:31] INFO  [Backend] req=4 stage=token_chunk chunk=4 chunk_chars=5 total_chars=17
+[17:14:31] INFO  [Backend] req=4 stage=token_chunk chunk=5 chunk_chars=9 total_chars=26
+[17:14:31] INFO  [Backend] req=4 stage=token_chunk chunk=25 chunk_chars=5 total_chars=141
+[17:14:31] INFO  [Backend] req=4 stage=complete
+[17:14:31] INFO  [Backend] req=4 stage=stream_finished token_chunks=29 token_chars=149 duration_ms=636
+[17:14:31] INFO  [Flow] req=4 stage=hotkey_finished duration_ms=1220
+[17:14:53] INFO  [Hotkey] WM_HOTKEY received for Ctrl+Shift+Space.
+[17:14:53] INFO  [Flow] req=5 stage=hotkey_triggered key="Ctrl+Shift+Space"
+[17:14:53] INFO  [Window] req=5 process=Code title="css practice11..html - css practice - Visual Studio Code" class=Chrome_WidgetWin_1 hwnd=1311310
+[17:14:53] INFO  [Window] req=5 classified_environment=ide_editor
+[17:14:53] INFO  [Capture] req=5 using_strategy=IDEStrategy
+[17:14:54] INFO  [CaptureSummary] req=5 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_editor strategy=IDEStrategy selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=82 background_chars=409 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range." duration_ms=89
+[17:14:54] INFO  [Capture] req=5 process=Code title="css practice11..html - css practice - Visual Studio Code" env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range selected_chars=82 background_chars=409 is_partial=False is_unsupported=False status="Selected text captured via UI Automation selection. Background context captured via UIA document range."
+[17:14:54] INFO  [Capture] req=5 Selected preview: .two{ background-color: red; height: 150px; width: 150px; display: inline-block;...
+[17:14:54] INFO  [Capture] req=5 Background preview: <div class="one"></div> <div class="two"></div> <h1>hellow world</h1> <p>bye</p>...
+[17:14:54] INFO  [Backend] req=5 Sending capture payload to backend.
+[17:14:54] INFO  [Backend] req=5 stage=connecting url=ws://localhost:3000/ws/stream selected_chars=82 background_chars=409 env=ide_editor selected_method=uia_textpattern_selection background_method=uia_textpattern_document_range partial=False unsupported=False
+[17:14:54] INFO  [Backend] req=5 stage=connected
+[17:14:54] INFO  [Backend] req=5 stage=payload_sent
+[17:14:54] INFO  [Backend] req=5 stage=meta label="ide_editor | uia_textpattern_selection + uia_textpattern_document_range"
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=1 chunk_chars=3 total_chars=3
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=2 chunk_chars=2 total_chars=5
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=3 chunk_chars=6 total_chars=11
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=4 chunk_chars=5 total_chars=16
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=5 chunk_chars=4 total_chars=20
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=25 chunk_chars=5 total_chars=103
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=50 chunk_chars=1 total_chars=204
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=75 chunk_chars=4 total_chars=296
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=100 chunk_chars=7 total_chars=381
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=125 chunk_chars=6 total_chars=492
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=150 chunk_chars=3 total_chars=611
+[17:14:54] INFO  [Backend] req=5 stage=token_chunk chunk=175 chunk_chars=3 total_chars=747
+[17:14:55] INFO  [Backend] req=5 stage=token_chunk chunk=200 chunk_chars=2 total_chars=862
+[17:14:55] INFO  [Backend] req=5 stage=token_chunk chunk=225 chunk_chars=7 total_chars=982
+[17:14:55] INFO  [Backend] req=5 stage=token_chunk chunk=250 chunk_chars=2 total_chars=1115
+[17:14:55] INFO  [Backend] req=5 stage=complete
+[17:14:55] INFO  [Backend] req=5 stage=stream_finished token_chunks=263 token_chars=1178 duration_ms=1240
+[17:14:55] INFO  [Flow] req=5 stage=hotkey_finished duration_ms=1537
+[18:09:54] INFO  [App] Startup began.
+[18:09:54] INFO  [App] Log file: D:\PROJECTS\Startup\prototype4 - Copy (2)\runlogs\client_live.log
+[18:09:54] INFO  [App] Hidden message window created.
+[18:09:54] INFO  [App] Tray icon ready.
+[18:09:54] INFO  [Hotkey] Registered Ctrl+Shift+Space.
+[18:09:54] INFO  [Hotkey] Registered Ctrl+Shift+Space.
+[18:09:54] INFO  [App] Overlay window created. App is ready.

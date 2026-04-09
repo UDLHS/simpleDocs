@@ -1,6 +1,6 @@
 # Intelligent Context Engine & Code Explainer
 
-Welcome to the repository. This document serves as the absolute master guide for the system. It covers the full architecture, exact technologies utilized, the context-capture flow, evaluation systems, and the future evolution of our OS-level assistant.
+Welcome to the repository. This document serves as the absolute master guide for the system. It covers the full architecture, exact technologies utilized, the context-capture flow, and the future evolution of our OS-level assistant.
 
 This is an advanced, Windows-first OS-level assistant that explains highlighted code, browser text, and terminal streams instantaneously—without forcing developers to switch windows. 
 
@@ -18,7 +18,7 @@ The ecosystem is decoupled into three primary workspaces carefully curated for p
 - **Hardware Fallbacks**: `Windows.Media.Ocr.OcrEngine` (Native UWP Visual Scanner)
 - **Backend Service**: Node.js / Hono Web Framework / WebSockets
 - **AI Generation**: OpenRouter API / Groq API (`llama-3.3-70b-instruct:free` recommended)
-- **Persistence Layer**: Local `.jsonl` Database for Evaluation Results.
+- **Persistence Layer**: Local `.jsonl` Database for log history.
 
 ### Repository Structure
 
@@ -41,10 +41,6 @@ The ecosystem is decoupled into three primary workspaces carefully curated for p
     app.js             # Hono WebSocket upgrade orchestration
   .env                 # Private Keys
 
-/evaluation            # ⚗️ Isolated Lab Workspace (For Team Testing without breaking Prod)
-  /cases               # Pre-configured `.json` datasets targeting edge cases
-  /results             # Output `.jsonl` streams (Latencies, Accuracy, Strategy Routes)
-  eval_runner.js       # Headless test script interacting directly with the Backend WS
 ```
 
 ---
@@ -98,26 +94,6 @@ When the C# Client determines it has valid context, it opens a WebSocket to `ws:
 The Node.js backend streams chunked tokens right back for parsing.
 
 ---
-
-## 4. Full Evaluation & Testing Plan
-
-To maintain production stability without bloating the C# app, all model latency and fallback routing assessments happen entirely inside the `/evaluation` workspace using a Headless Mock Client (`eval_runner.js`).
-
-### How the Local Evaluation Workflow Acts
-1. **Isolate Logic**: Evaluative testing never touches C#. Instead, it directly contacts the normal Node.js WebSocket route `ws://localhost:3000/ws/stream`.
-2. **Dummy Injectors**: Predefined JSON blocks replicating exactly what the UI *would* scrape exist under `/evaluation/cases/`. This lets engineers debug prompt responses accurately without having to open an IDE manually.
-3. **Automated Logging**: The Node Script streams the AI's tokens natively to memory and stores a flat data dump to `/results/eval_results.jsonl`, generating highly readable rows of tracking data: Input Context, Output Speed (MS), Final Generation, Case Types.
-
-### Running an Evaluation Test:
-You must ensure the backend server is running first (refer to section 6), as the evaluator tests the live generation paths.
-```powershell
-cd evaluation
-npm run eval
-```
-The script will loop through all .json files inside /cases/, wait for final response chunks over WS, and print successes/latencies to the terminal before saving quietly inside /results.
-
-**For a deep dive into the latest benchmarking results (95.5% browser success rate, 1.7s latency) and tool operational guides, see:**
-👉 [Evaluation Module & Performance Report](evaluation/evaluation_module_details.md)
 
 ---
 
