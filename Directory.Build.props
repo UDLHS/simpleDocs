@@ -3,7 +3,7 @@
     <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)build\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
     <MSBuildProjectExtensionsPath>$(MSBuildThisFileDirectory)build\$(MSBuildProjectName)\obj\</MSBuildProjectExtensionsPath>
     <BaseOutputPath>$(MSBuildThisFileDirectory)build\$(MSBuildProjectName)\bin\</BaseOutputPath>
-    <DefaultItemExcludes>$(DefaultItemExcludes);**\obj_codex\**;**\bin_codex\**;build\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\obj_codex\**;**\bin_codex\**</DefaultItemExcludes>
     <Version>1.1.0-pilot</Version>
     <FileVersion>1.1.0.0</FileVersion>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>

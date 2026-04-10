@@ -31,6 +31,9 @@ foreach ($target in $copyTargets) {
 Push-Location $outputDir
 try {
     npm ci --omit=dev
+    if ($LASTEXITCODE -ne 0) {
+        throw "Backend packaging failed with exit code $LASTEXITCODE."
+    }
     $manifest = @{
         product = "Code Explainer Backend"
         version = $Version

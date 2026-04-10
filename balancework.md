@@ -14,31 +14,36 @@ This document lists the remaining work in detail so we can move from near-deploy
 - authenticated WebSocket flow is implemented
 - hosted Supabase connectivity is working
 - DB tables are reachable
+- redeem codes are seeded in hosted DB
+- backend health endpoint is responding locally
+- client debug build succeeds
+- client publish script succeeds
+- backend packaging script succeeds
+- tester bundle script succeeds
 - packaging/support scripts are present
 
 ### Still not fully finished
-- redeem-code seed data is not loaded yet
 - client staging/production backend URLs are still placeholders
-- one confirmed live auth-to-log run is still pending
-- final pilot packaging and environment verification still need to be completed
+- one full real WPF client run against the hosted backend is still pending
+- packaged build still needs to be tested on a clean Windows machine
+- final pilot environment verification still needs to be completed
 
 ## 2. Remaining Work By Priority
 
 ## Priority A: Must Complete Before Pilot
 
 ### A1. Seed redeem codes
-Status: not done
+Status: done
 
 Work:
-- insert redeem codes into `redeem_codes`
-- verify codes are visible in hosted DB
+- verify codes remain visible in hosted DB
 - assign tester-code tracking sheet
 
 Why it matters:
 - without redeem codes, no tester can sign in
 
 Done when:
-- at least one test code exists
+- codes exist in `redeem_codes`
 - one code can be redeemed once and cannot be reused
 
 ### A2. Replace client placeholder URLs
@@ -60,12 +65,10 @@ Done when:
 - client starts and points to the real hosted backend in staging/production mode
 
 ### A3. Full hosted auth verification
-Status: not done
+Status: partly done
 
 Work:
-- test `POST /auth/redeem-code`
-- test `POST /auth/refresh`
-- test `POST /auth/logout`
+- verify the same flow from the real WPF login UI
 - test invalid code behavior
 - test expired/revoked session behavior
 
@@ -73,10 +76,10 @@ Why it matters:
 - auth code exists, but pilot readiness requires live behavior verification
 
 Done when:
-- sign-in, restart, refresh, and logout work against hosted backend
+- sign-in, restart, refresh, and logout work against hosted backend from the real app
 
 ### A4. Full hosted explain verification
-Status: not done
+Status: partly done
 
 Work:
 - start client against hosted backend
@@ -89,10 +92,10 @@ Why it matters:
 - this confirms the real deployment path, not just local builds
 
 Done when:
-- one end-to-end hosted explanation succeeds
+- one end-to-end hosted explanation succeeds from the real WPF client flow
 
 ### A5. DB request logging verification
-Status: partially done
+Status: partly done
 
 Work:
 - confirm final `request_logs` row is created
@@ -105,7 +108,7 @@ Why it matters:
 - this is required for the planned case-study and pilot analysis
 
 Done when:
-- one successful live request creates the expected rows in all related tables
+- one successful real-app request creates the expected rows in all related tables
 
 ## Priority B: Strongly Recommended Before External Users
 
@@ -122,10 +125,10 @@ Done when:
 - internal pilot completes without critical blockers
 
 ### B2. Packaging validation
-Status: partly done
+Status: mostly done
 
 Work:
-- publish client in release mode
+- verify the published client on a clean Windows machine
 - verify packaged bundle on a clean Windows machine
 - confirm launcher works
 - confirm no dev-only files are required
@@ -216,10 +219,10 @@ Work:
 1. seed redeem codes
 2. replace client staging/production URLs
 3. run backend hosted env check
-4. test redeem login
-5. test one full explanation
+4. test redeem login from the real WPF client
+5. test one full explanation from the real WPF client
 6. verify DB rows
-7. build release package
+7. verify the packaged release on a clean Windows machine
 8. internal pilot
 9. fix pilot issues
 10. external pilot
@@ -227,9 +230,9 @@ Work:
 ## 5. Deployment Blockers Right Now
 
 These are the real blockers preventing a true pilot release today:
-- redeem codes not seeded
 - client production/staging URLs not finalized
-- no confirmed end-to-end live auth + explain + DB log test yet
+- no confirmed end-to-end live auth + explain + DB log test yet from the real WPF client
+- packaged build has not yet been validated on a clean tester machine
 
 ## 6. What Should Not Change Now
 

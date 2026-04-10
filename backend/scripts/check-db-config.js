@@ -1,9 +1,12 @@
-import { createClient } from '@supabase/supabase-js';
 import { loadEnvironment } from '../src/config/loadEnv.js';
+import { pathToFileURL } from 'node:url';
+import path from 'node:path';
 
 const environmentName = loadEnvironment();
 
 const checks = [];
+
+let createClient;
 
 function addResult(status, label, detail = '') {
   checks.push({ status, label, detail });
@@ -32,6 +35,29 @@ function printAndExit(code) {
   }
 
   process.exit(code);
+}
+
+async function ensureSupabaseClientFactory() {
+  if (createClient) {
+    return createClient;
+  }
+
+  try {
+    ({ createClient } = await import('@supabase/supabase-js'));
+    return createClient;
+  } catch (error) {
+    if (error?.code !== 'ERR_MODULE_NOT_FOUND') {
+      throw error;
+    }
+
+    const fallbackPath = path.resolve(
+      import.meta.dirname,
+      '../node_modules/@supabase/supabase-js/dist/index.mjs'
+    );
+
+    ({ createClient } = await import(pathToFileURL(fallbackPath).href));
+    return createClient;
+  }
 }
 
 async function checkTable(client, tableName) {
@@ -105,7 +131,8 @@ async function main() {
     return;
   }
 
-  const client = createClient(supabaseUrl, keyToUse, {
+  const createClientFactory = await ensureSupabaseClientFactory();
+  const client = createClientFactory(supabaseUrl, keyToUse, {
     auth: {
       autoRefreshToken: false,
       persistSession: false

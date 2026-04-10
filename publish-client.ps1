@@ -38,6 +38,9 @@ if ($SelfContained.IsPresent) {
 
 Write-Host "Publishing client to $publishDir ..."
 dotnet @publishArgs
+if ($LASTEXITCODE -ne 0) {
+    throw "Client publish failed with exit code $LASTEXITCODE."
+}
 
 $launcherPath = Join-Path $publishDir "Start-CodeExplainer.bat"
 $launcherContent = @"
