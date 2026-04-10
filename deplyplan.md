@@ -1,139 +1,120 @@
 # Deployment Plan
 
-## Goal
+## Current Stage
 
-Deploy the current system to a small group of real Windows users without changing the existing application flow.
+The project is in late pre-deployment / pilot-preparation stage.
 
-The safest first release is a **local pilot deployment**:
+The main application flow is already preserved and working in its intended structure:
+- Windows WPF client
+- native capture engine
+- Node.js Hono backend
+- WebSocket streaming
+- overlay response UI
 
-- The WPF client runs on the tester's Windows machine.
-- The Node backend also runs locally on the tester's machine.
-- The backend continues to call the LLM provider directly using the tester or team API key.
-- No hosted backend changes are required for the first pilot.
+The system is no longer just local-only in design. The deployment path now includes hosted auth and hosted request logging.
 
-This keeps the current architecture intact and avoids introducing new network, auth, latency, and hosting variables while we validate the product with real usage.
+## What Is Already Implemented
 
-## Recommended rollout stages
+### Core product
+- hotkey-triggered native capture flow
+- overlay streaming response flow
+- lightweight thumbs up / thumbs down response feedback
+- compact overlay-oriented explanation style
 
-### Stage 1: Internal pilot
+### Auth and session
+- redeem-code login
+- refresh-token flow
+- logout flow
+- Windows secure token storage
+- WebSocket auth at handshake
+- protected backend routes
 
-- 3 to 5 trusted Windows testers
-- Manual install
-- Local backend only
-- Shared support channel for issues
-- Collect logs manually from `runlogs/`
+### Hosted data path
+- Supabase/Postgres connectivity
+- auth-related tables
+- request log table path
+- session/request id flow
+- async post-response request logging
 
-### Stage 2: Small external pilot
+### Packaging and support
+- client publish script
+- backend package script
+- tester bundle script
+- support bundle export script
+- release checklist and pilot guide
 
-- 10 to 20 testers
-- Same local architecture
-- Add installer/package workflow
-- Add onboarding checklist and support instructions
-- Define log collection and issue reporting process
+## What Still Needs To Be Done
 
-### Stage 3: Production hardening
+### Must do before external users
+1. Seed redeem codes into `redeem_codes`.
+2. Replace placeholder staging/production backend URLs in the client config files.
+3. Run one real redeem-code login against the hosted backend.
+4. Run one full explain request and confirm DB rows are written.
+5. Confirm logout and refresh behavior.
+6. Build and verify the final packaged tester bundle.
 
-- Decide whether backend stays local or becomes hosted
-- Add auth strategy
-- Add packaging and auto-update strategy
-- Add privacy policy and user consent flow
-- Add operational monitoring and release process
+### Should do before broader rollout
+1. Validate on multiple Windows versions and DPI settings.
+2. Validate on VS Code, browser, Windows Terminal, and classic terminal.
+3. Confirm support process for logs and tester issues.
+4. Freeze one build for the pilot.
 
-## What can be deployed right now
+## Deployment Phases
 
-The current repo can already be piloted manually if each tester has:
+### Phase 1: Infrastructure completion
+- hosted Supabase configured
+- schema applied
+- service-role and access-token secrets configured
+- redeem codes seeded
 
-- Windows 10/11
-- Node.js installed
-- `.NET` runtime support via published client build
-- `backend/.env` configured with a valid API key
+### Phase 2: Staging validation
+- client points to real staging API / WebSocket URLs
+- one redeem-code login works
+- one request writes to `participants`, `refresh_tokens`, `sessions`, and `request_logs`
+- WebSocket auth works with the live backend
 
-Current launch path:
+### Phase 3: Internal pilot
+- 3 to 5 trusted users
+- packaged build only
+- support bundle collection enabled
+- issue triage after every tester session
 
-1. Install backend dependencies with `npm install` in `backend/`
-2. Start backend with `npm run dev` or `node index.js`
-3. Start client with `dotnet run --project client/CodeExplainer.csproj` or a published build
+### Phase 4: External pilot
+- 10 to 30 users
+- fixed build and fixed model configuration
+- redeem-code issuance tracked manually
+- thumbs feedback and DB logs reviewed regularly
 
-This is enough for an internal pilot, but it is not yet a polished tester package.
+## Current Risks
 
-## Things we need to change before real-user deployment
+### Technical risks
+- staging and production client URLs are still placeholders
+- redeem codes are not seeded yet
+- full live auth-to-log path still needs one confirmed end-to-end run
 
-These are the main gaps. I am listing them only in docs here and not changing code.
+### Operational risks
+- API keys in local env should be rotated before real-user rollout
+- support / tester onboarding must be consistent
+- privacy language must be shown clearly to testers
 
-### 1. Packaging
+## Recommended Immediate Order
 
-- Create a repeatable release bundle for the client
-- Decide whether Node is bundled or required separately
-- Provide a one-click launcher for testers
-- Remove dependency on `dotnet run` for pilot users
+1. Seed `redeem_codes`.
+2. Replace client staging/production URLs.
+3. Start hosted backend with final env values.
+4. Test redeem-code login.
+5. Test one real explanation.
+6. Confirm DB inserts.
+7. Produce final tester bundle.
+8. Start internal pilot.
 
-### 2. Environment setup
+## Definition Of Pilot Ready
 
-- Prepare a clean `backend/.env` template for testers
-- Decide whether all testers use one shared API key or per-user keys
-- Lock the provider and model for pilot consistency
-- Verify `PORT=3000` is acceptable on tester machines
-
-### 3. Logs and support
-
-- Decide which log files testers should send back
-- Define how users report issues
-- Add a short troubleshooting checklist
-- Decide log retention and cleanup expectations
-
-### 4. Privacy and consent
-
-- Explain clearly that the app captures selected text and surrounding context
-- Define which data can be sent to the LLM provider
-- Confirm whether browser and terminal capture are allowed for pilot testers
-- Add tester consent language before external rollout
-
-### 5. Stability hardening
-
-- Test on multiple Windows versions
-- Test on multiple DPI/scaling settings
-- Test VS Code, browsers, terminals, and unsupported apps
-- Verify clipboard fallback safety on tester machines
-
-### 6. Security
-
-- Decide whether `SKIP_AUTH=true` is acceptable for local pilot only
-- Confirm API key storage approach on tester machines
-- Add a secret-handling policy for support staff
-- Decide whether Supabase logging is enabled or disabled for pilot
-
-### 7. Operations
-
-- Define who owns pilot support
-- Define release naming and versioning
-- Define rollback instructions
-- Define how updated builds will be distributed to testers
-
-## Recommended deployment decision
-
-For the next step, I recommend:
-
-- **Deploy local-only pilot**
-- **Do not host backend yet**
-- **Do not change capture logic yet**
-- **Do not add more features until pilot feedback starts coming in**
-
-This gives the cleanest signal on whether the current workflow is useful in real usage.
-
-## Minimum checklist before sending to testers
-
-- Build client in `Release`
-- Install backend dependencies with `npm ci --omit=dev`
-- Create `backend/.env`
-- Verify API key works
-- Verify `http://localhost:3000/api/health`
-- Verify hotkey works on one clean Windows machine
-- Verify logs are written to `runlogs/`
-- Prepare launch instructions and troubleshooting notes
-
-## Decision points still needed
-
-- Shared API key vs per-user API key
-- Manual zip distribution vs installer
-- Local backend only vs hosted backend later
-- Internal pilot only vs external pilot
+The system is pilot ready when all of these are true:
+- client packaged build launches cleanly
+- redeem-code login works
+- session restores after restart
+- authenticated WebSocket explain request works
+- final request log row is written to hosted DB
+- thumbs feedback works in overlay
+- no obvious capture or overlay regressions are present

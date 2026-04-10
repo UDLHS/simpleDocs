@@ -1,48 +1,58 @@
-# Live Log Export Tool Implementation Plan
+# Implementation Status Plan
 
-## Goal Description
-Create a lightweight, separate Node.js script that parses `runlogs/client_live.log` (live request logs) and converts each request into a simple structured JSON (or JSONL) dataset suitable for evaluation, model comparison, and paper analysis. The script must not modify the live application, affect runtime performance, or alter capture logic.
+This document replaces the older temporary planning notes and tracks the current implementation status of the deployment-ready system.
 
-## User Review Required
-> [!IMPORTANT]
-> Confirm the desired output file location and name (e.g., `evaluation/live_evaluation_dataset.jsonl`).
-> Confirm whether to output JSONL (one record per line) or a single JSON array. The plan assumes JSONL for streaming simplicity.
+## Completed Work
 
-## Proposed Changes
----
-### New Script
-- **[NEW] [export_live_logs.js](file:///d:/PROJECTS/Startup/prototype4%20-%20Copy%20%282%29/evaluation/export_live_logs.js)**
-  - Reads `runlogs/client_live.log`.
-  - Splits log into request blocks using regex for `req=\d+` or `Flow` entries.
-  - Extracts fields:
-    - `run_id` (generated UUID or `case_{req}`)
-    - `source` = "live_log"
-    - `source_request_id` (numeric request ID)
-    - `timestamp` (first log entry timestamp for the request)
-    - `environment_type` (from `[Capture]` line)
-    - `window_title` and `process_name` (from `[Window]` line)
-    - `selected_method` and `background_method` (from `[Capture]` line)
-    - `selected_text` (from `Selected preview:` line, if present)
-    - `background_context` (from `Visible preview:` line, if present)
-    - `selected_text_is_preview` / `background_context_is_preview` (boolean flags)
-    - `selected_chars` (selected_chars value)
-    - `background_chars` (visible_chars value)
-    - `is_partial`, `is_unsupported` (from capture line)
-    - `status_message` (from `[CaptureSummary]` line)
-    - `latency_ms` (duration_ms from capture line)
-    - `model_name` (null – not present in logs)
-    - `response` (concatenated token contents from `[Backend] Token received` lines)
-    - `status` (derived: `success` if not partial/unsupported, else `partial`, `capture_failure`, or `backend_failure` based on flags and token presence)
-  - Handles incomplete logs by setting missing fields to `null` and marking appropriate status.
-  - Writes each record as a line of JSON to `evaluation/live_evaluation_dataset.jsonl`.
+### Core assistant flow
+- native Windows capture pipeline remains intact
+- overlay rendering remains intact
+- WebSocket streaming remains intact
+- explanation style is tuned for the small overlay
+- thumbs up / thumbs down feedback exists in the overlay
 
----
-## Open Questions
-> [!IMPORTANT]
-> - Do you prefer the output file to be placed in `evaluation/` or another directory?
-> - Should the script be executable via `node export_live_logs.js` or added as an npm script entry?
+### Auth and session
+- redeem-code login UI exists in the WPF client
+- backend redeem / refresh / logout endpoints exist
+- client stores tokens securely on Windows
+- session restore and silent refresh are implemented
+- WebSocket auth is validated on connect
 
-## Verification Plan
-- Run the script locally and inspect the first few lines of the generated JSONL.
-- Ensure that fields match the log content and that missing data results in `null`.
-- Verify that the script does not modify any existing files.
+### Request logging
+- session id and request id flow exist
+- request logging is designed to happen after stream completion
+- hosted DB connectivity checks are available
+- DB schema and seed SQL files exist in the repo
+
+### Deployment tooling
+- client publish script exists
+- backend package script exists
+- tester bundle script exists
+- support bundle export script exists
+- release and launch docs exist
+
+## Remaining Work
+
+### High priority
+1. seed redeem codes in the hosted DB
+2. replace staging/production client placeholder URLs
+3. run one full redeem-code login test against hosted backend
+4. run one full explain request against hosted backend
+5. verify DB rows are created correctly
+
+### Medium priority
+1. validate on multiple Windows environments
+2. verify logout and expired-session recovery with real backend
+3. package the final pilot bundle
+4. prepare internal pilot support workflow
+
+### Lower priority after pilot starts
+1. refine onboarding copy based on tester confusion
+2. tighten metrics review process
+3. decide long-term release/update workflow
+
+## Current Truth
+
+The remaining work is mostly infrastructure hookup, staging validation, and pilot hardening.
+
+The main product architecture should not be redesigned at this stage.

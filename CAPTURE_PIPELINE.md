@@ -1,80 +1,102 @@
 # Capture Architecture Pipeline
 
-This document serves as the permanent technical specification for the finalized capture architecture of the context capture engine.
+This document is the technical reference for the current capture architecture. The deployment and auth work does not replace this capture design.
+
+## Core Principle
+
+The capture pipeline remains Windows-native and performance-first.
+
+The following changes around auth, logging, and deployment do not redesign the core capture path:
+- no Web frontend replacement
+- no Electron migration
+- no browser-based capture conversion
+- no blocking DB writes before first token
 
 ## Core Technologies
 
-*   **Win32 APIs:** Foreground/window APIs for active app detection and focus handling (`GetForegroundWindow`, `GetWindowText`, `GetClassName`, `SetForegroundWindow`). 
-*   **UI Automation (UIA):** Native automation via `TextPattern` and some `ValuePattern` probing for selection/background extraction.
-*   **MSAA / IAccessible:** Fallback path for selection, focus, and container text.
-*   **Clipboard Compatibility Mode:** Uses `Ctrl+C` simulation (`InputSimulator`) combined with clipboard integrity checks.
-*   **Classic Console Buffer API:** Leverages `AttachConsole` + `ReadConsoleOutputCharacter` for classic terminals.
-*   **Native Windows OCR Engine (`Windows.Media.Ocr.OcrEngine`):** The ultimate failure fallback. A silent hardware visual scanner natively built into Windows 10/11 that reads background text identically to how the human eye views it—completely bypassing Chrome DOM/Canvas/UI trees.
+- **Win32 APIs:** Foreground/window detection and focus handling
+- **UI Automation (UIA):** Primary selected/background extraction path
+- **MSAA / IAccessible:** Secondary fallback path
+- **Clipboard Compatibility Mode:** Safe copy-based fallback for editors and terminal cases
+- **Classic Console Buffer API:** Legacy terminal support
+- **Native Windows OCR Engine:** Last-resort fallback for canvas/blocked/visual-only surfaces
 
 ## Global Pipeline
 
-1.  **Detect:** Active window + process + class (`ContextCaptureEngine.cs`).
-2.  **Classify Environment:** Identify context patterns (e.g. `ide_editor`, `ide_embedded_terminal`, `browser_*`, `modern_terminal`, etc.) (`EnvironmentClassifier.cs`).
-3.  **Dispatch to Strategy:** Route to specialized UI extractors based on classification hierarchy.
+1. Detect active window and process.
+2. Classify the environment.
+3. Route to the matching capture strategy.
+4. Extract selected text using the ordered fallback chain.
+5. Extract background context using the strategy-specific fallback chain.
+6. Build capture metadata including methods, partial/unsupported state, and usage context.
+7. Send the final payload to the backend only after capture completes.
 
-## Selected Text Fallback Plan
+## Selected Text Fallback Order
 
-### Generic Selected Pipeline (Used by Most Strategies)
-**Order of Execution:**
-1.  UIA `GetSelection()`
-2.  MSAA explicit selection (requires selection signal)
-3.  MSAA focused-text fallback (if enabled for the strategy)
-4.  Clipboard compatibility mode (if allowed by rules/environment)
-5.  Unsupported selected result
+### Generic order
+1. UIA selection
+2. MSAA explicit selection
+3. MSAA focused-text fallback where allowed
+4. clipboard compatibility where allowed
+5. unsupported selected result
 
-**Special Strategy Behaviors:**
-*   **Firefox** sets `preferMsaaFirst=true` (MSAA-first behavior).
-*   **IDE Editor** disables MSAA focused-text fallback (`allowMsaaFocusedFallback: false`) to force clipboard compatibility in VS Code safely.
+### IDE terminal special order
+1. UIA selection
+2. MSAA explicit selection
+3. terminal-safe clipboard compatibility fallback
+4. unsupported selected result
 
-### IDE Embedded Terminal Special Selected Plan
-Separate terminal-specific chain to handle embedded terminal constraints safely without accidental command execution.
-**Order of Execution:**
-1.  UIA selection
-2.  MSAA explicit selection
-3.  Terminal clipboard compatibility fallback (`clipboard_compat_terminal`). Ensures focus-stability checks before and after extraction.
-4.  Unsupported selected if still empty.
+## Background Context Fallback Order
 
-## Background Text Fallback Plan
+### IDE editor
+- UIA document range
+- UIA visible ranges
+- nearest UIA container
+- OCR
+- metadata fallback
 
-*   **IDE Editor Background:** 
-    *   *Chain:* UIA document range -> UIA visible ranges -> UIA nearest container -> Native OCR Engine -> metadata fallback.
-*   **Terminal Background:**
-    *   *Chain:* UIA visible ranges -> optional UIA document range (modern terminal only) -> Native OCR Engine -> metadata.
-*   **Browser/Electron Background:**
-    *   *Chain:* UIA nearest container -> Native OCR Engine -> metadata.
-*   **Canvas-Locked/External Background:**
-    *   *Chain:* Drops straight to **Native OCR Engine** to read pixels, sidestepping DOM elements meant to block accessibility readers.
+### Terminal
+- UIA visible ranges
+- optional UIA document range for modern terminal
+- OCR
+- metadata fallback
 
-## Clipboard Compatibility Safety Plan
+### Browser / Electron
+- nearest UIA container
+- OCR
+- metadata fallback
 
-A core aspect of safely utilizing clipboard fallbacks is preventing destructive actions or loss of user clipboard state.
-1.  Backup original clipboard object + original text.
-2.  Capture clipboard sequence number before action.
-3.  Clear clipboard.
-4.  Send `Ctrl+C` only (no `Ctrl+A`, no undo hacks).
-5.  Poll for clipboard text with timeout.
-6.  Accept only if changed during request and differs from previous content.
-7.  Restore original clipboard in `finally` block.
+### Canvas-locked or external surfaces
+- OCR-first fallback path
 
-## Noise Rejection / Quality Filters
+## Safety Rules
 
-*   Removes known IDE/UI junk (e.g., `vscode-file://`, webview URIs, accessibility warnings, metadata text).
-*   Rejects "chrome labels only" outputs (explorer, search, problems, etc.).
-*   Keeps likely code-like content using code-signal heuristics.
+### Clipboard safety
+- backup clipboard before copy simulation
+- send only `Ctrl+C`
+- detect clipboard change safely
+- restore the original clipboard in `finally`
 
-## Status/Classification Rules (Current)
+### Quality filtering
+- reject UI junk and metadata noise
+- prefer code-like or terminal-like content signals
+- preserve partial results when useful selected text is missing but context is still helpful
 
-*   **`ide_editor`:** If selected text is missing but background exists, returns `partial=true`, `unsupported=false`. 
-*   **`ide_embedded_terminal`:**
-    *   If selected is missing but background exists => `partial=true`, `unsupported=false`.
-    *   If both are missing => `unsupported=true`. 
+## Capture Output Fields
 
-## Config Knobs
+The capture result currently includes fields such as:
+- `selected_text`
+- `background_context`
+- `window_title`
+- `process_name`
+- `environment_type`
+- `selected_method`
+- `background_method`
+- `is_partial`
+- `is_unsupported`
+- `status_message`
+- `usage_context`
 
-*   `CODE_EXPLAINER_CLIPBOARD_COMPAT`: Editor/browser generic clipboard compat gate.
-*   `CODE_EXPLAINER_CLIPBOARD_COMPAT_WHITELIST`: Compat whitelist override.
+## Deployment Note
+
+Auth, session restore, and DB logging happen around the capture system, not inside the capture extraction path itself. This is important because it keeps the core capture behavior and latency profile stable.

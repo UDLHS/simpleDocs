@@ -2,152 +2,136 @@
 
 ## Purpose
 
-This guide is for launching the current system with pilot testers without changing the codebase.
+This guide explains how to launch the current system in development, staging, and pilot environments without changing the core architecture.
 
-## Recommended tester profile
+## Supported Runtime Shape
 
-- Windows 10 or Windows 11
-- Comfortable running a simple setup guide
-- Has permission to install Node.js if needed
-- Understands that selected text and surrounding context may be sent to the configured AI provider
+The current intended runtime is:
+- Windows desktop client on the user machine
+- hosted backend reachable over HTTPS / WSS
+- hosted Supabase/Postgres for auth and request logs
 
-## Tester prerequisites
+For local development, localhost is still supported.
 
-Each tester machine needs:
+## Prerequisites
 
+### Backend host
 - Node.js 22+
-- Internet access to the configured AI provider
-- A configured `backend/.env`
-- The project files or a prepared release bundle
+- internet access to the selected AI provider
+- internet access to Supabase
+- real backend `.env` values
 
-## Files the tester needs
+### Client machine
+- Windows 10 or Windows 11
+- network access to the backend URL
+- packaged client build or local .NET 8 desktop runtime for development
 
-- `client/` build output or the repo itself
-- `backend/`
-- `run.ps1` or equivalent launcher
-- `backend/.env`
-
-## Backend setup
+## Backend Environment Setup
 
 Create `backend/.env` from `backend/.env.example`.
 
-Minimum values:
+### Minimum hosted setup
 
 ```env
 PORT=3000
-SKIP_AUTH=true
-AI_PROVIDER=openrouter
-OPENROUTER_API_KEY=your_real_key_here
-OPENROUTER_MODEL=google/gemini-2.5-flash-preview
+AI_PROVIDER=groq
+GROQ_API_KEY=your_real_groq_key
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+ACCESS_TOKEN_SECRET=your_random_secret
+SKIP_AUTH=false
 ```
 
-Notes:
+### Important notes
+- `SKIP_AUTH=false` is required for hosted pilot deployment.
+- `SUPABASE_SERVICE_ROLE_KEY` should be present for auth and logging reliability.
+- `ACCESS_TOKEN_SECRET` should be your own generated backend secret.
+- `SUPABASE_ANON_KEY` is still useful for connectivity checks, but service-role access is the deployment path.
 
-- `SKIP_AUTH=true` is acceptable only for a local pilot
-- Use one fixed model during the pilot so results are easier to compare
-- If OpenRouter is not used, set the matching provider variables instead
+## Client Config Setup
 
-## Launch steps for internal testers
+The client loads environment-aware config from:
+- `client/appsettings.json`
+- `client/appsettings.Staging.json`
+- `client/appsettings.Production.json`
 
-### Option A: Run from source
+Before staging or production launch, replace placeholder URLs in:
+- `ApiBaseUrl`
+- `WsBaseUrl`
 
-Backend:
+## Local Development Launch
 
-```powershell
-cd backend
-npm install
-npm run dev
-```
-
-Client:
-
-```powershell
-dotnet run --project client\CodeExplainer.csproj
-```
-
-### Option B: Run with the existing root script
-
-```powershell
-.\run.ps1
-```
-
-This is the simplest current launch path for internal testing.
-
-## Pre-launch checks
-
-Before handing this to a tester, verify:
+### Backend
 
 ```powershell
 cd backend
 npm install
 npm run check
+npm run dev
 ```
 
-Then confirm:
+### Client
 
-- Backend starts on port `3000`
-- `http://localhost:3000/api/health` returns healthy JSON
-- Client launches without crashing
-- Tray icon appears
-- Hotkey registration succeeds
-- One real capture request works
-- `runlogs/` is being written
+```powershell
+dotnet build client\CodeExplainer.csproj -nologo
+dotnet run --project client\CodeExplainer.csproj
+```
 
-## Suggested tester instructions
+### Local dev behavior
+- `appsettings.json` currently allows auth-disabled local development mode
+- this is intended only for development convenience
+- hosted testing should use staging/production config with auth enabled
 
-Tell testers:
+## Hosted Readiness Check
 
-- Start the app
-- Go to VS Code, browser, or terminal
-- Select text
-- Press `Ctrl+Shift+Space`
-- Wait for the overlay result
-- Repeat in a few different apps
-- Report where it worked, where it failed, and any confusing behavior
+Run:
 
-## What testers should send back
+```powershell
+cd backend
+npm run check
+npm run check:db
+```
 
-- A short bug description
-- What app they were using
-- What text they selected
-- What they expected
-- What happened instead
-- Relevant files from `runlogs/`
+Expected result:
+- auth configuration OK
+- Supabase reachable
+- tables reachable
+- no syntax check failures
 
-## Support checklist
+## Manual Staging Verification
 
-If a tester says the app does not work:
+Before handing a build to testers, verify these manually:
 
-1. Check Node is installed with `node -v`
-2. Check backend starts without errors
-3. Check `backend/.env` exists and has a real key
-4. Check port `3000` is free
-5. Check the tray icon appears
-6. Check hotkey registration succeeded in logs
-7. Check `runlogs/client_live.log`
+1. backend starts cleanly
+2. health endpoint responds
+3. redeem-code login succeeds
+4. access token refresh works after restart
+5. authenticated WebSocket connect succeeds
+6. one explanation is streamed back
+7. `participants`, `refresh_tokens`, `sessions`, and `request_logs` receive expected rows
+8. logout revokes the refresh token cleanly
 
-## Known rollout limitations of the current system
+## Suggested Pilot Launch Path
 
-- Windows only
-- Local backend required
-- Manual setup required
-- No installer yet
-- No auto-update path yet
-- No structured feedback collection flow yet
-- No deployment packaging workflow yet
+1. build the client bundle
+2. package the backend or deploy the hosted backend
+3. seed tester redeem codes
+4. verify one end-to-end login + explain flow
+5. hand the packaged client to internal pilot users first
 
-## Recommended pilot policy
+## Support Inputs To Collect
 
-- Start with internal testers only
-- Use one supported provider and one model
-- Avoid giving this to non-technical users first
-- Keep pilot size small until setup friction is reduced
+If a pilot tester reports an issue, collect:
+- tester redeem code or tester id
+- time of the issue
+- application used when capture failed
+- whether sign-in worked
+- whether the overlay appeared
+- support bundle generated by `export-support-bundle.ps1`
 
-## What still needs to be prepared before broader launch
+## Known Remaining Launch Gaps
 
-- A packaged release bundle
-- A one-click launcher for published builds
-- A support channel
-- A privacy note for testers
-- A log collection and triage process
-- A versioned release process
+- staging and production client URLs still need final real values
+- redeem codes still need to be seeded for pilot users
+- one confirmed live auth-to-log path is still required before external rollout
