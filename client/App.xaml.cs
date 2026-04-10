@@ -177,7 +177,7 @@ namespace CodeExplainer
             if (captureResult.HasSelectedText)
             {
                 RuntimeLog.Info("Backend", $"req={requestId} Sending capture payload to backend.");
-                _overlayWindow?.ShowLoading(BuildStatusLabel(captureResult));
+                _overlayWindow?.ShowLoading(BuildStatusLabel(captureResult), requestId);
 
                 await BackendClient.SendExplainRequest(
                     captureResult.SelectedText,

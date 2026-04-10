@@ -63,6 +63,8 @@ const CODE_PATTERNS = [
   /\b(fn|let|mut|pub|impl|struct|trait|use|mod|match)\b/,
   /\b(package|func|type|struct|interface|go|defer|chan)\b/,
   /\b(SELECT|FROM|WHERE|INSERT|UPDATE|DELETE|CREATE|ALTER|JOIN)\b/,
+  /^\s*[.#]?[a-zA-Z][\w-]*\s*\{/m,      // CSS selector blocks
+  /\b[a-zA-Z-]+\s*:\s*[^;\n]+;?/m,      // CSS declarations
   /[{}\[\]();]/,
   /=>/,
   /\b\w+\s*\([^)]*\)\s*[{:]/,        // function declaration patterns
@@ -94,6 +96,78 @@ function isFragmentarySelection(text) {
   return words <= 12;
 }
 
+function hasUnbalancedDelimiters(text) {
+  const counts = { '(': 0, ')': 0, '[': 0, ']': 0, '{': 0, '}': 0 };
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (counts[ch] !== undefined) {
+      counts[ch] += 1;
+    }
+  }
+
+  return counts['('] !== counts[')'] || counts['['] !== counts[']'] || counts['{'] !== counts['}'];
+}
+
+function hasMalformedCssLine(text) {
+  const looksLikeCssBlock = text.includes('{') && text.includes('}') && /[a-zA-Z-]+\s*:\s*[^;\n]+;/.test(text);
+  if (!looksLikeCssBlock) {
+    return false;
+  }
+
+  const lines = text.replace(/\r\n/g, '\n').split('\n').map(line => line.trim()).filter(Boolean);
+  let insideBlock = false;
+  for (const line of lines) {
+    if (line.includes('{')) {
+      const tail = line.slice(line.indexOf('{') + 1).trim();
+      if (tail.length > 0 && tail !== '}') {
+        const isCommentTail = tail.startsWith('/*') || tail.startsWith('//');
+        const hasDeclarationSignal = tail.includes(':');
+        if (!isCommentTail && !hasDeclarationSignal) {
+          return true;
+        }
+      }
+
+      insideBlock = true;
+      if (line.endsWith('{')) {
+        continue;
+      }
+    }
+
+    if (line === '}') {
+      insideBlock = false;
+      continue;
+    }
+
+    if (!insideBlock) {
+      continue;
+    }
+
+    const isComment = line.startsWith('/*') || line.startsWith('*') || line.startsWith('//');
+    const isValidDeclaration = /^[a-zA-Z-]+\s*:\s*[^;]+;?$/.test(line);
+    if (!isComment && !isValidDeclaration) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function hasLikelySyntaxIssue(text, codeScore) {
+  if (codeScore < 2) {
+    return false;
+  }
+
+  if (hasUnbalancedDelimiters(text)) {
+    return true;
+  }
+
+  if (hasMalformedCssLine(text)) {
+    return true;
+  }
+
+  return false;
+}
+
 /**
  * Classify selected text into one of 4 cases.
  * @param {string} selectedText - The selected text to classify
@@ -110,12 +184,15 @@ export function classify(selectedText, backgroundContext = '') {
   const selectedErrorScore = score(trimmed, ERROR_PATTERNS);
   if (selectedErrorScore >= 1) return 2;
 
+  // Priority 1b: Obvious syntax issues in selected code (lightweight heuristic).
+  const selectedCodeScore = score(trimmed, CODE_PATTERNS);
+  if (hasLikelySyntaxIssue(trimmed, selectedCodeScore)) return 2;
+
   // Priority 2: Terminal content
   const selectedTerminalScore = score(trimmed, TERMINAL_PATTERNS);
   if (selectedTerminalScore >= 1) return 3;
 
   // Priority 3: Source code
-  const selectedCodeScore = score(trimmed, CODE_PATTERNS);
   if (selectedCodeScore >= 2) return 1; // Need at least 2 code signals to be confident
 
   // Context fallback: if the selected snippet is short/fragmentary, use background context
