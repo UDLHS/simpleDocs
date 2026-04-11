@@ -337,6 +337,9 @@ export async function redeemCode(code) {
     throw new AuthError(400, 'code is required');
   }
 
+  // Fail before any DB mutation if token signing is not configured.
+  requireAccessTokenSecret();
+
   const client = requireAdminClient();
   const config = getAuthConfig();
   const codeRow = await loadRedeemCodeRow(client, normalizedCode, config);

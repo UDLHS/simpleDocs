@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Input;
 
 namespace CodeExplainer
 {
@@ -42,6 +43,19 @@ namespace CodeExplainer
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }
