@@ -44,8 +44,8 @@ Status: partly done
 
 Work:
 - test redeem-code login from the real WPF login UI
-- test invalid code behavior
-- test used code behavior
+- confirm invalid code behavior from the real WPF login UI
+- confirm used code behavior from the real WPF login UI
 - test app restart with stored session
 - test logout and refresh against hosted backend
 
