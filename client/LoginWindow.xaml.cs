@@ -8,7 +8,11 @@ namespace CodeExplainer
         public LoginWindow()
         {
             InitializeComponent();
-            Loaded += (_, _) => CodeTextBox.Focus();
+            Loaded += (_, _) =>
+            {
+                CodeTextBox.Focus();
+                UpdatePlaceholder();
+            };
         }
 
         public string RedeemCode => CodeTextBox.Text.Trim();
@@ -56,6 +60,23 @@ namespace CodeExplainer
             {
                 DragMove();
             }
+        }
+
+        private void CodeTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (ErrorText.Visibility == Visibility.Visible && !string.IsNullOrWhiteSpace(CodeTextBox.Text))
+            {
+                SetError(string.Empty);
+            }
+
+            UpdatePlaceholder();
+        }
+
+        private void UpdatePlaceholder()
+        {
+            PlaceholderText.Visibility = string.IsNullOrWhiteSpace(CodeTextBox.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
     }
 }

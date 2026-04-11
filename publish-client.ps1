@@ -17,6 +17,12 @@ if (Test-Path $publishDir) {
     Remove-Item -LiteralPath $publishDir -Recurse -Force
 }
 
+Write-Host "Restoring client for runtime $Runtime ..."
+dotnet restore $clientProject -r $Runtime
+if ($LASTEXITCODE -ne 0) {
+    throw "Client restore failed with exit code $LASTEXITCODE."
+}
+
 $publishArgs = @(
     "publish", $clientProject,
     "-c", $Configuration,

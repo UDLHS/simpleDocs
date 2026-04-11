@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Sign In"
         Width="520"
-        Height="340"
+        Height="392"
         ResizeMode="NoResize"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -22,6 +22,9 @@
             <GradientStop Color="#78B7FF" Offset="0" />
             <GradientStop Color="#4F7FFF" Offset="1" />
         </LinearGradientBrush>
+        <SolidColorBrush x:Key="InputPanelBrush" Color="#E6101724" />
+        <SolidColorBrush x:Key="InputStrokeBrush" Color="#6F8FD1FF" />
+        <SolidColorBrush x:Key="InputHintBrush" Color="#8FA7C8" />
 
         <Style x:Key="PrimaryButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="#08111E" />
@@ -216,8 +219,9 @@
                     </Grid>
 
                     <Grid Grid.Row="1"
-                          Margin="0,24,0,0">
+                          Margin="0,22,0,0">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -252,31 +256,73 @@
                                    FontSize="14"
                                    Foreground="{StaticResource TextMutedBrush}" />
 
-                        <Border Grid.Row="3"
-                                Margin="0,22,0,0"
-                                Padding="2"
-                                Background="#22FFFFFF"
-                                BorderBrush="#3CFFFFFF"
-                                BorderThickness="1"
-                                CornerRadius="16">
-                            <Border Background="#1C0F1726"
-                                    CornerRadius="14">
-                                <TextBox x:Name="CodeTextBox"
-                                         Height="54"
-                                         Padding="16,0"
-                                         FontSize="26"
-                                         FontWeight="SemiBold"
-                                         Background="Transparent"
-                                         Foreground="{StaticResource TextPrimaryBrush}"
-                                         BorderThickness="0"
-                                         CaretBrush="#9AC6FF"
-                                         VerticalContentAlignment="Center"
-                                         HorizontalContentAlignment="Left" />
-                            </Border>
+                        <TextBlock Grid.Row="3"
+                                   Margin="2,20,0,0"
+                                   Text="Access code"
+                                   FontSize="12"
+                                   FontWeight="SemiBold"
+                                   Foreground="#D9E9FF" />
+
+                        <Border Grid.Row="4"
+                                Margin="0,10,0,0"
+                                Padding="0"
+                                Background="{StaticResource InputPanelBrush}"
+                                BorderBrush="{StaticResource InputStrokeBrush}"
+                                BorderThickness="2"
+                                CornerRadius="18">
+                            <Grid Height="66">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="62" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Border Margin="10"
+                                        CornerRadius="13"
+                                        Background="#28FFFFFF"
+                                        BorderBrush="#33FFFFFF"
+                                        BorderThickness="1">
+                                    <TextBlock HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Text="ID"
+                                               FontSize="14"
+                                               FontWeight="SemiBold"
+                                               Foreground="#EAF2FF" />
+                                </Border>
+
+                                <Grid Grid.Column="1"
+                                      Margin="0,0,16,0">
+                                    <TextBox x:Name="CodeTextBox"
+                                             Height="66"
+                                             Padding="0,0,0,0"
+                                             FontSize="28"
+                                             FontWeight="SemiBold"
+                                             Background="Transparent"
+                                             Foreground="{StaticResource TextPrimaryBrush}"
+                                             BorderThickness="0"
+                                             CaretBrush="#9AC6FF"
+                                             VerticalContentAlignment="Center"
+                                             HorizontalContentAlignment="Left"
+                                             TextChanged="CodeTextBox_TextChanged" />
+
+                                    <TextBlock x:Name="PlaceholderText"
+                                               Margin="0,0,0,0"
+                                               VerticalAlignment="Center"
+                                               Text="Type your code here"
+                                               FontSize="18"
+                                               Foreground="{StaticResource InputHintBrush}"
+                                               IsHitTestVisible="False" />
+                                </Grid>
+                            </Grid>
                         </Border>
 
+                        <TextBlock Grid.Row="5"
+                                   Margin="2,10,0,0"
+                                   Text="Paste or type the code exactly as you received it."
+                                   FontSize="12"
+                                   Foreground="{StaticResource TextMutedBrush}" />
+
                         <TextBlock x:Name="ErrorText"
-                                   Grid.Row="4"
+                                   Grid.Row="6"
                                    Margin="2,12,0,0"
                                    TextWrapping="Wrap"
                                    FontSize="13"
