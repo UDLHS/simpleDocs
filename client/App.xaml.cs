@@ -22,8 +22,10 @@ namespace CodeExplainer
         private int _requestSequence;
         private ClientConfig? _config;
         private AuthSessionManager? _authSessionManager;
+        private WindowsStartupManager? _startupManager;
         private ToolStripMenuItem? _signInMenuItem;
         private ToolStripMenuItem? _logoutMenuItem;
+        private ToolStripMenuItem? _startupMenuItem;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -34,7 +36,18 @@ namespace CodeExplainer
             _config = ClientConfig.Load();
             BackendClient.Configure(_config);
             _authSessionManager = new AuthSessionManager(_config);
+            _startupManager = new WindowsStartupManager();
             RuntimeLog.Info("App", $"Environment={_config.EnvironmentName} api={_config.ApiBaseUrl} ws={_config.WsBaseUrl} auth_enabled={_config.AuthEnabled}");
+
+            try
+            {
+                _startupManager.Initialize();
+                RuntimeLog.Info("Startup", $"Windows auto-start enabled={_startupManager.IsStartupEnabled}");
+            }
+            catch (Exception ex)
+            {
+                RuntimeLog.Error("Startup", $"Unable to configure Windows auto-start: {ex.Message}");
+            }
 
             // Hidden window needed for hotkey message pump
             _hiddenWindow = new MainWindow();
@@ -87,14 +100,18 @@ namespace CodeExplainer
             };
 
             var contextMenu = new ContextMenuStrip();
+            _startupMenuItem = new ToolStripMenuItem("Start On Windows Login", null, (_, _) => ToggleStartupFromTray());
             _signInMenuItem = new ToolStripMenuItem("Sign In", null, async (_, _) => await SignInFromTrayAsync());
             _logoutMenuItem = new ToolStripMenuItem("Logout", null, async (_, _) => await LogoutFromTrayAsync());
+            contextMenu.Items.Add(_startupMenuItem);
+            contextMenu.Items.Add(new ToolStripSeparator());
             contextMenu.Items.Add(_signInMenuItem);
             contextMenu.Items.Add(_logoutMenuItem);
             contextMenu.Items.Add(new ToolStripSeparator());
             contextMenu.Items.Add("Exit", null, (_, _) => ExitApp());
             _trayIcon.ContextMenuStrip = contextMenu;
             UpdateTrayAuthStatus();
+            UpdateTrayStartupStatus();
         }
 
         private void UpdateTrayHotkeyStatus()
@@ -145,6 +162,46 @@ namespace CodeExplainer
             if (_logoutMenuItem != null)
             {
                 _logoutMenuItem.Enabled = authEnabled && hasSession;
+            }
+        }
+
+        private void UpdateTrayStartupStatus()
+        {
+            if (_startupMenuItem == null || _startupManager == null)
+            {
+                return;
+            }
+
+            _startupMenuItem.Checked = _startupManager.IsStartupEnabled;
+        }
+
+        private void ToggleStartupFromTray()
+        {
+            if (_startupManager == null)
+            {
+                return;
+            }
+
+            try
+            {
+                bool nextState = !_startupManager.IsStartupEnabled;
+                bool enabled = _startupManager.SetStartupEnabled(nextState);
+                UpdateTrayStartupStatus();
+                RuntimeLog.Info("Startup", $"Windows auto-start updated enabled={enabled}");
+                _trayIcon?.ShowBalloonTip(
+                    2500,
+                    "simpleDocs",
+                    enabled ? "simpleDocs will now start when you sign in to Windows." : "simpleDocs will no longer start automatically with Windows.",
+                    ToolTipIcon.Info);
+            }
+            catch (Exception ex)
+            {
+                RuntimeLog.Error("Startup", $"Failed to update Windows auto-start: {ex.Message}");
+                _trayIcon?.ShowBalloonTip(
+                    3000,
+                    "simpleDocs",
+                    "Unable to update the Windows startup setting on this machine.",
+                    ToolTipIcon.Warning);
             }
         }
 

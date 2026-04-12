@@ -47,6 +47,10 @@ After the first successful sign-in, the tester can simply:
 4. Press the app hotkey.
 5. Read the overlay response.
 
+By default, `simpleDocs` also starts automatically when the user signs in to Windows.
+
+If they want to turn that off later, they can use the tray icon menu.
+
 ## Does the tester need to install it again every day
 
 No.

@@ -53,6 +53,7 @@ simpleDocs tester bundle
 3. Run CodeExplainer.exe
 4. Enter the redeem code you received
 5. Use the configured hotkey inside your normal workflow
+6. The app starts with Windows by default and can be changed from the tray menu
 
 Environment: $EnvironmentName
 "@
