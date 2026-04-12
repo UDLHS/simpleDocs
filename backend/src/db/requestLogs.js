@@ -59,3 +59,49 @@ export async function logCompletedRequest(record) {
     logger.error(`Request logging failed: ${err.message}`);
   }
 }
+
+export async function saveRequestFeedback(record) {
+  if (!record?.participant_id || record.participant_id === 'unknown' || record.participant_id === 'local-dev') {
+    logger.warn('Skipping request feedback because participant_id is unavailable');
+    return false;
+  }
+
+  if (!record?.request_id || !record?.feedback_reaction) {
+    logger.warn('Skipping request feedback because request_id or feedback_reaction is unavailable');
+    return false;
+  }
+
+  const client = getClient();
+  if (!client) {
+    return false;
+  }
+
+  const config = getConfig();
+
+  try {
+    const { data, error } = await client
+      .from(config.requestLogsTable)
+      .update({
+        feedback_reaction: record.feedback_reaction
+      })
+      .eq('request_id', record.request_id)
+      .eq('participant_id', record.participant_id)
+      .select('request_id')
+      .maybeSingle();
+
+    if (error) {
+      logger.error(`Request feedback update failed: ${error.message}`);
+      return false;
+    }
+
+    if (!data) {
+      logger.warn(`Request feedback skipped because request log was not found: ${record.request_id}`);
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    logger.error(`Request feedback save failed: ${err.message}`);
+    return false;
+  }
+}

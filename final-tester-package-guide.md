@@ -15,14 +15,13 @@ They only need to unzip it and run the app.
 After extracting the zip, the folder contains:
 
 - `app\CodeExplainer.exe`
-- `app\Start-CodeExplainer.bat`
-- `docs\...`
+- `app\appsettings.json`
+- `docs\final-tester-package-guide.md`
+- `docs\chatgpt-tester-plan-prompt.md`
 
 The main file the tester should use is:
 
 `app\CodeExplainer.exe`
-
-The `.bat` file is only an optional launcher.
 
 ## First-time setup for a tester
 

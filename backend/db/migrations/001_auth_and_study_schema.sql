@@ -44,7 +44,8 @@ create table if not exists request_logs (
     time_to_first_token_ms integer null,
     total_response_time_ms integer not null,
     selected_text text not null,
-    response_text text not null
+    response_text text not null,
+    feedback_reaction text null check (feedback_reaction in ('up', 'down'))
 );
 
 create index if not exists idx_request_logs_participant_time
@@ -52,18 +53,3 @@ create index if not exists idx_request_logs_participant_time
 
 create index if not exists idx_request_logs_task_type
     on request_logs (task_type);
-
-create table if not exists request_feedback (
-    id bigserial primary key,
-    participant_id uuid not null references participants(id) on delete cascade,
-    request_id text not null,
-    reaction text not null check (reaction in ('up', 'down')),
-    created_at timestamptz not null default now(),
-    unique (request_id, participant_id)
-);
-
-create index if not exists idx_request_feedback_participant_time
-    on request_feedback (participant_id, created_at desc);
-
-create index if not exists idx_request_feedback_request_id
-    on request_feedback (request_id);

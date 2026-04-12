@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { saveRequestFeedback } from '../db/requestFeedback.js';
+import { saveRequestFeedback } from '../db/requestLogs.js';
 
 async function parseJsonBody(c) {
   try {
@@ -34,8 +34,7 @@ export function createFeedbackRoute() {
     const saved = await saveRequestFeedback({
       participant_id: participantId,
       request_id: requestId,
-      reaction,
-      created_at: new Date().toISOString()
+      feedback_reaction: reaction
     });
 
     if (!saved) {

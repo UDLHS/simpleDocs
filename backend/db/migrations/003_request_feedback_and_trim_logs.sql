@@ -6,22 +6,38 @@ drop index if exists idx_request_logs_session_id;
 alter table if exists request_logs
     drop column if exists session_id,
     drop column if exists is_partial,
-    drop column if exists is_unsupported;
+    drop column if exists is_unsupported,
+    add column if not exists feedback_reaction text null;
+
+alter table if exists request_logs
+    drop column if exists feedback_at;
+
+alter table if exists request_logs
+    drop constraint if exists request_logs_feedback_reaction_check;
+
+alter table if exists request_logs
+    add constraint request_logs_feedback_reaction_check
+    check (feedback_reaction in ('up', 'down') or feedback_reaction is null);
 
 drop index if exists idx_sessions_participant_id;
 drop table if exists sessions;
 
-create table if not exists request_feedback (
-    id bigserial primary key,
-    participant_id uuid not null references participants(id) on delete cascade,
-    request_id text not null,
-    reaction text not null check (reaction in ('up', 'down')),
-    created_at timestamptz not null default now(),
-    unique (request_id, participant_id)
-);
+do $$
+begin
+    if exists (
+        select 1
+        from information_schema.tables
+        where table_schema = 'public'
+          and table_name = 'request_feedback'
+    ) then
+        update request_logs as rl
+        set
+            feedback_reaction = rf.reaction
+        from request_feedback as rf
+        where rl.request_id = rf.request_id
+          and rl.participant_id = rf.participant_id
+          and rl.feedback_reaction is null;
 
-create index if not exists idx_request_feedback_participant_time
-    on request_feedback (participant_id, created_at desc);
-
-create index if not exists idx_request_feedback_request_id
-    on request_feedback (request_id);
+        drop table if exists request_feedback;
+    end if;
+end $$;
